@@ -1,9 +1,8 @@
 package divideconquer;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
-public class MergeSort {
+public class InversionCount {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
     int n = scanner.nextInt();
@@ -13,30 +12,32 @@ public class MergeSort {
       arr[i] = scanner.nextInt();
     }
 
-    mergeSort(arr);
-
-    System.out.println(Arrays.toString(arr));
+    System.out.println(inversions(arr));
   }
 
-  private static void mergeSort(int[] arr) {
+  private static int inversions(int[] arr) {
     int[] aux = new int[arr.length];
-    mergeSort(arr, aux, 0, arr.length - 1);
+    return inversions(arr, aux, 0, arr.length - 1);
   }
 
-  private static void mergeSort(int[] arr, int[] aux, int lo, int hi) {
+  private static int inversions(int[] arr, int[] aux, int lo, int hi) {
     if (lo >= hi)  {
-      return;
+      return 0;
     }
 
     int mid = lo + (hi - lo) / 2;
-    mergeSort(arr, aux, lo, mid);
-    mergeSort(arr, aux, mid + 1, hi);
+    int i1 = inversions(arr, aux, lo, mid);
+    int i2 = inversions(arr, aux, mid + 1, hi);
 
-    merge(arr, aux, lo, mid, hi);
+    int i3 = inversionsOnMerge(arr, aux, lo, mid, hi);
+
+    return i1 + i2 + i3;
   }
 
-  private static void merge(int[] arr, int[] aux, int lo, int mid, int hi) {
+  private static int inversionsOnMerge(int[] arr, int[] aux, int lo, int mid, int hi) {
     System.arraycopy(arr, lo, aux, lo, hi - lo + 1);
+
+    int invs = 0;
 
     int i = lo;
     int j = mid + 1;
@@ -49,7 +50,9 @@ public class MergeSort {
         arr[k] = aux[i++];
       } else {
         arr[k] = aux[j++];
+        invs += (mid + 1 - i);
       }
     }
+    return invs;
   }
 }

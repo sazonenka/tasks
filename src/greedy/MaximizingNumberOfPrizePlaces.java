@@ -21,7 +21,6 @@ public class MaximizingNumberOfPrizePlaces {
       }
     }
     System.out.println(result.size());
-    System.out.println(String.join(" ",
-        result.stream().map(Object::toString).collect(Collectors.toList())));
+    System.out.println(result.stream().map(Object::toString).collect(Collectors.joining(" ")));
   }
 }

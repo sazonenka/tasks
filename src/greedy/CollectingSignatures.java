@@ -25,8 +25,7 @@ public class CollectingSignatures {
       }
     }
     System.out.println(points.size());
-    System.out.println(String.join(" ",
-        points.stream().map(Object::toString).collect(Collectors.toList())));
+    System.out.println(points.stream().map(Object::toString).collect(Collectors.joining(" ")));
   }
 
   private static class Segment implements Comparable<Segment> {
